@@ -1,0 +1,720 @@
+/* Dark Mode Styles */
+
+.dark-mode .menu {
+    background-color: #161E2C;
+    border: 0.1px solid #323747;
+  }
+  
+  .dark-mode .sidenav {
+    background-color: #111;
+  }
+  
+  .dark-mode .new-chat-btn:hover {
+    border: none;
+  }
+  
+  .dark-mode .delete-chats-btn {
+    background-color: none;
+    background: none;
+  }
+  
+  .dark-mode .delete-chats-btn:hover {
+    background: #333;
+  }
+  
+  .dark-mode .input-form input[type="text"] {
+  background-color: #0e131f;
+  color: #c5b6ac;
+  }
+  
+  .dark-mode .version {
+    color: #c5b6ac;
+  }
+  
+  .dark-mode .pill {
+    background-color: #0e131f;
+    color: #c5b6ac;
+    border: 0.1px solid #323747;
+  }
+  
+  .dark-mode .pill:hover {
+    background-color: #333;
+  }
+  
+  .dark-mode .circle-button {
+    color: #c5b6ac;
+  }
+  
+  .dark-mode .input-form button {
+    color: #c5b6ac;
+  }
+  
+  .dark-mode .circle-button:hover {
+    background-color: #333;
+  }
+  
+  .dark-mode .input-form button:hover {
+    background-color: #333;
+  }
+  
+  .dark-mode .input-form {
+  background-color: #161E2C;
+  border: 0.1px solid #323747;
+  }
+  
+  .dark-mode .user .chat-text {
+    background: #1d2439;
+    color: #c5b6ac;
+    border: 0.1px solid #323747;
+  }
+  
+  .dark-mode .name-box, .dark-mode .get-started-btn {
+    background-color: #222;
+    color: white;
+  }
+  
+  .dark-mode .name-box {
+  background-color: #161E2C;
+  border: 0.1px solid #323747;
+  }
+  
+  .dark-mode .name-input {
+    background-color: #0e131f;
+    color: #c5b6ac;
+  }
+  
+  .dark-mode .get-started-btn:hover {
+    background-color: #333;
+  }
+  
+  
+  /* Style for the name modal and its contents */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;  /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);  /* Partial blur */
+    z-index: 1000;
+    backdrop-filter: blur(5px);  /* Slight blur */
+  }
+  
+  .name-box {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #FAEEE1;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border: 0.5px solid white;
+  }
+  
+  
+  .name-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    border: 0.5px solid white;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 0px;
+    background: linear-gradient(to right, rgba(25, 106, 218, 1), rgba(196, 81, 191, 1));
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientAnimation 10s ease infinite;
+  }
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .name-info {
+    font-size: 14px;
+    color: grey;
+    margin-bottom: 20px;
+  }
+  
+  .name-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 28px;
+    border: 1px solid #ccc;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .name-input:focus {
+    outline: none; /* Remove default outline */
+    border: 1px solid #ccc;
+  }
+  
+  .get-started-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: black;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 0.5px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+  }
+  
+  .get-started-btn:hover {
+    background-color: #EAE5DF;
+    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  
+  .get-started-btn:active {
+    background-color: #8a8787;
+  }
+  
+  /* Make sure the blur is applied to the rest of the page content */
+  body.blur {
+    filter: blur(5px);
+  }
+  
+  
+  .sidenav {
+              height: 100%;
+              width: 0;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: 0;
+              background-color: #FAEEE1;
+              overflow-x: hidden;
+              transition: 0.5s;
+              padding-top: 60px;
+              text-align: center;
+          }
+  
+          /* Set the width of the side navigation to 250px */
+          .sidenav.open {
+              width: 225px;
+              z-index: 999;
+          }
+  
+          /* Style the close button */
+          .sidenav .closebtn {
+              position: absolute;
+              top: 10px;
+              right: 25px;
+              font-size: 25px;
+              margin-left: 50px;
+              transition: 0.5s;
+          }
+  
+  .sidenav .closebtn:hover {
+    color: #333;
+    transition: 0.5s;
+  }
+  
+          /* Style the hamburger menu icon */
+          .hamburger {
+              cursor: pointer;
+              font-size: 30px;
+              position: fixed;
+              left: 5px;
+              top: 5px;
+              z-index: 998;
+          }
+  
+          .hamburger:hover {
+            background-color: #333;
+          }
+  
+       .trash-icon {
+          color: red;
+          cursor: pointer;
+        }
+  
+      .chat-name {
+          text-align: center;
+          font-weight: bold;
+          padding: 5px;
+        }
+  
+  .version {
+    font-size: 9pt;
+    color: #333;
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+  }
+  
+  .chat-box {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-y: scroll;
+    height: 400px;
+  }
+  
+  .chat-bubble {
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 70%;
+  }
+  
+  .bot {
+    justify-content: flex-start;
+  }
+  
+  .user {
+    justify-content: flex-end;
+  }
+  
+  .bot .chat-text {
+    background-color: #e6e6e6;
+  }
+  
+  
+  
+  .bot p,
+  .user p {
+    margin: 0;
+  }
+  
+  .bot .chat-text::before {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 1px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #E9E9EB;
+    margin-right: 10px;
+  
+  }
+  
+  .input-form input[type="text"]:focus {
+    outline: none; /* Remove default outline */
+    border: none;   /* Remove any border changes */
+  }
+  
+  .user .chat-text {
+    background: linear-gradient(to bottom right, #60ABF5, #3A80F6);
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+    display: inline-block;
+    max-width: 70%;
+    position: relative;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .bot .chat-text{
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 0px;
+      background: linear-gradient(to right, rgba(25, 106, 218, 1), rgba(196, 81, 191, 1));
+      -webkit-background-clip: text;
+      color: transparent;
+      background-clip: text;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+      font-weight: bold;
+      border: 0.5px solid white;
+  }
+  
+  .user .chat-text::before {
+    content: "";
+    display: none;
+  }
+  
+  /* Dark Mode Styles */
+  .dark-mode {
+    background-color: #111;
+    color: white;
+    /* Add other dark mode styles here */
+  }
+  
+  
+  /* Add some styles for the input form */
+  .input-form {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: white;
+  }
+  
+  .input-form input[type="text"]:active {
+    border: none;
+    outline: none;
+  }
+  
+  
+  
+  .input-form button {
+    color: black;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .input-form button:hover {
+    background-color: #EAE5DF;
+    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  
+  .input-form button:active {
+    background-color: #EAE5DF;
+    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;}
+  
+  /* Add some styles for the typing indicator */
+  .typing-indicator {
+    display: none;
+    margin-bottom: 10px;
+    z-index: 999;
+  }
+  
+  .typing-indicator span {
+    display: inline-block;
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    animation: typing 1s infinite;
+    z-index: 999;
+  }
+  
+  @keyframes typing {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .feedback-buttons {
+    display: inline-block;
+    margin-left: 10px;
+    transition: opacity 0.5s ease;
+  }
+  
+  .thumbs-up-btn, .thumbs-down-btn {
+    cursor: pointer;
+    color: #888;
+    margin: 0 5px;
+  }
+  
+  .thumbs-up-btn:hover, .thumbs-down-btn:hover {
+    color: #555;
+  }
+  
+  .fa-thumbs-up {
+    color: #888;
+  }
+  
+  .fa-thumbs-down {
+    color: #888;
+  }
+  
+  .feedback-input {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 4px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 0.5px solid white;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 28px;
+    font-weight: bold;
+  }
+  
+  .feedback-text-input {
+    width: 150px;
+    padding: 5px;
+    border: none;
+    border-radius: 28px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .feedback-text-input:focus, .feedback-input:focus {
+    outline: none; /* Remove default outline */
+    border: none;   /* Remove any border changes */
+  }
+  
+  .feedback-submit-btn {
+    margin-left: 5px;
+    margin-right: 3px;
+    padding: 5px 10px;
+    background-color: none;
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .feedback-submit-btn:hover {
+    background-color: #EAE5DF;
+    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .feedback-thank-you {
+    display: inline-block;
+    margin-left: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    color: #888;
+    font-style: italic;
+  }
+  
+  .thumbs-down-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #888;
+  }
+  
+  .thumbs-down-btn:hover {
+    color: #555;
+  }
+  
+  .fa-thumbs-down {
+    color: #f00;
+  }
+  
+  .input-form button.disabled {
+        background-color: gray;
+        cursor: not-allowed;
+      }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 1vh; /* Adjust the height as needed */
+  }
+  
+  .circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-top: 30px;
+    background-image: url('https://dim.mcusercontent.com/cs/18e321d28d6c0855c3d8f43d6/images/573f9970-77a2-73ff-9801-2f10212eba50.jpg?w=1133&dpr=1');
+    background-size: cover;
+  }
+  
+  /* Mobile */
+  @media only screen and (max-width: 767px) {
+    .input-form {
+      width: 100%;
+    }
+    .input-form button, .input-form input {
+      bottom: 10px;
+   }
+  
+  .pc-clear {
+    display: none;
+  }
+  
+  .version {
+    display: none;
+  }
+  
+  .mobile-clear {
+    margin-top: 17.5px;
+  }
+  
+    .chat-text {
+     font-weight: bold;
+   }
+    .pill:hover {
+      background-color: none;
+   }
+    .pill:active {
+      background-color: none;
+      color: black;
+   }
+    .circle-button {
+      margin-right: 3px;
+   }
+    .pill {
+     height: 50px;
+     width: 120px;
+   }
+  .jump-bottom-btn {
+    display: none;
+   }
+  
+  .menu {
+    width: 200px;
+   }
+  
+  .pc-chats {
+    display: none;
+   }
+  
+  }
+  
+  /* Computer */
+  @media only screen and (min-width: 768px) {
+    
+    .circle {
+     display: none;
+   }
+    .circle-button {
+      margin-right: 10px;
+   }
+  
+    .pill {
+    padding: 10px;
+    width: auto;
+    height: 15px;
+   }
+  
+  .menu {
+    width: 200px;
+   }
+  
+  .jump-bottom-btn {
+    display: none;
+   }
+  
+  .mobile-clear {
+    display: none;
+  }
+  
+  .pc-chats {
+    display: none;
+  }
+  
+  .pill:hover {
+    background-color: #8a8787;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+   }
+  }
+  
+  .pill-container {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .pill {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    color: black;
+    margin-right: 10px;
+    margin-top: 10px;
+    text-align: center;
+    border: 0.5px solid white;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    font-size: 8pt;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  
+  .pill:active {
+    background-color: black;
+    color: white;
+  }
+  
+  .circle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: black;
+    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  
+  .circle-button i {
+    font-size: 20px;
+  }
+  
+  .circle-button:hover {
+    background-color: #EAE5DF;
+    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  
+  .circle-button:active {
+    background-color: #8a8787;
+  }
+  
+  .jump-bottom-btn {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 32px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    z-index: 999;
+  }
+  
+  .jump-bottom-btn:hover {
+    background-color: darkblue;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .jump-bottom-btn:active {
+    background-color: blue;
+    color: white;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  

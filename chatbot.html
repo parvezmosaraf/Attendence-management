@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Edu Easee</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="images/x-icon"
+        href="https://dim.mcusercontent.com/cs/18e321d28d6c0855c3d8f43d6/images/b0e0cca4-0310-f3c6-ca3c-c1e2a3631e4c.png?w=608&dpr=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/059831245d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-5J+ofCAyfy9nAB/vZOGk6V+84VGgzUASiEdqHcVwjAGky1NJNXvLOwBYw7Bo5tIfXPQ1rMYM4R2FdcD7uELbw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./assets/css/chatbot.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="ai_model.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Ginto, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+        }
+
+        body {
+            animation: fadeInAnimation ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            background-color: #FAEEE1;
+        }
+
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile */
+        @media only screen and (max-width: 767px) {
+            .pill-container {
+                display: none;
+            }
+        }
+
+
+        .trash-icon {
+            color: red;
+            margin-left: 7px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .chat-list {
+            overflow-y: hidden;
+            /* Hide the vertical scrollbar by default */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-list.show-scrollbar {
+            overflow-y: auto;
+            /* Show the vertical scrollbar when .show-scrollbar class is applied */
+        }
+
+        /* Nice-looking scrollbar styles */
+        .chat-list::-webkit-scrollbar {
+            width: 8px;
+            border-radius: 4px;
+        }
+
+        .chat-list::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 4px;
+        }
+
+        .chat-list::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        /* Date styles */
+        .chat-date {
+            color: grey;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .active-chat {
+            border: none;
+            background-color: black;
+            color: red;
+            border-radius: 5px;
+        }
+
+        .menu {
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 0.5px solid white;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            y-overflow: scroll;
+        }
+
+        .new-chat-btn {
+            border-radius: 10px;
+            background: linear-gradient(to right, rgba(25, 106, 218, 1), rgba(196, 81, 191, 1));
+            -webkit-background-clip: text;
+            color: transparent;
+            background-clip: text;
+            padding: 5px;
+            border: none;
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .new-chat-btn:hover {
+            border: 0.5px solid white;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        /* Nice-looking scrollbar styles */
+        .chat-list::-webkit-scrollbar {
+            width: 5px;
+            border-radius: 4px;
+        }
+
+        .chat-list::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 4px;
+        }
+
+        .chat-list::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        .chat-list {
+            overflow-y: auto;
+            /* Enable vertical scrolling for the chat list */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-list button {
+            margin-bottom: 3px;
+            margin-top: 3px;
+            border: 0.5px solid white;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            color: black;
+            font-weight: bold;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .delete-chats-btn:hover {
+            background-color: #EAE5DF;
+            transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .delete-chats-btn:active {
+            background-color: #111;
+        }
+
+
+        /* Active chat styles */
+        .active-chat {
+            border: none;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .chat-list button:last-child {
+            margin-bottom: 0;
+        }
+
+        .chat-list button:first-child {
+            margin-top: 20px;
+        }
+
+        /* Add more styles as needed */
+        .delete-chats-btn {
+            border-radius: 10px;
+            background-color: none;
+            background: none;
+            color: rgba(153, 0, 0, 1);
+            padding: 5px;
+            border: none;
+            font-size: 12pt;
+            margin-top: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .chat-box::-webkit-scrollbar {
+            display: none;
+            /* Hides the scrollbar */
+        }
+
+        .chat-box {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: scroll;
+            max-height: fit-content;
+        }
+
+        .chat-bubble {
+            display: inline-block;
+            margin-bottom: 10px;
+            clear: both;
+        }
+
+        .chat-bubble.user {
+            float: right;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .chat-bubble.bot {
+            float: left;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 0px;
+        }
+
+        .chat-text {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .input-form {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto 0;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 0.5px solid white;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            padding: 5px;
+        }
+
+
+        .input-form input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            background-color: white;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .input-form button {
+            border: none;
+            padding: 12px 12px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 28px;
+            background: none;
+        }
+
+        .idea-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .typing-indicator {
+            display: none;
+            margin-bottom: 10px;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            margin-right: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ccc;
+            animation: typing 1s infinite;
+        }
+
+        @keyframes typing {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="name-modal" class="modal-overlay">
+        <div class="name-box">
+            <div class="name-title">I don't think we've met. What's your name?</div>
+            <p class="name-info">This name is kept on your device, private, and is only used to personalize your
+                experience.<br>Only your first name is required.</p>
+            <input type="text" id="name-input" class="name-input" placeholder="Enter your name here..." required /><br>
+
+            <p><strong>Which do you prefer?</strong></p>
+            <div class="mode-selection">
+                <label><input type="radio" name="theme" value="light" checked> Light Mode</label>
+                <label><input type="radio" name="theme" value="dark"> Dark Mode</label>
+            </div></br>
+
+            <button id="get-started-btn" class="get-started-btn">Get Started!</button>
+        </div>
+    </div>
+
+
+    <h1 style="text-align: center;">Edu Easee - ChatBOT</h1>
+    </div>
+    <div class="chat-name" id="chat-name">Chat 1</div>
+    <div class="chat-box" id="chat-box">
+        <div class="chat-bubble bot">
+            <div class="chat-text">
+                <p>Welcome to your friendly Chat Bot! My name is Esper. How may I help you today?</p>
+                <p>Try typing, "What can you do" or "show me a list of commands".</p>
+            </div>
+        </div>
+        <div class="chat-bubble bot">
+            <div class="chat-text">
+                <p>Also, Please don't use any punctuation or emojis.</p>
+            </div>
+        </div>
+    </div>
+    <button id="jump-bottom-btn" class="jump-bottom-btn"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+    <div class="pill-container">
+        <div class="mobile-clear">
+            <div id="clear-chat-btn" onclick="clearChat()" class="circle-button">
+                <span><i class="fas fa-broom"></i></span>
+            </div>
+        </div>
+        <div id="pill1" class="pill"></div>
+        <div id="pill2" class="pill"></div>
+        <div id="pill3" class="pill"></div>
+        <div id="pill4" class="pill"></div>
+        <div style="margin-left: 30px;" class="pill" onclick="updatePillContent()"><i class="fa fa-refresh"
+                aria-hidden="true"></i></div>
+    </div>
+    <form class="input-form">
+        <div class="pc-clear">
+            <div id="clear-chat-btn" onclick="clearChat()" class="circle-button">
+                <span><i class="fas fa-broom"></i></span>
+            </div>
+        </div>
+        <input type="text" id="input-box"
+            placeholder="Type your message here. Please don't use any punctuation or emojis." required /><button
+            type="submit" id="submit-btn"><strong><i class="fa fa-arrow-up" aria-hidden="true"></i></strong></button>
+    </form>
+
+
+    <span
+        style="background-color: rgba(255, 255, 255, 0.5); border: 0.5px solid white; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.06); padding-left: 5px; border-radius: 5px; padding-right: 5px; padding-bottom: 5px; z-index: 500;"
+        class="hamburger" onclick="openNav()">&#9776;</span>
+
+    <!-- The side navigation menu -->
+    <div style="z-index: 999;" id="mySidenav" class="sidenav">
+        <div class="chats">
+            <div class="menu" id="menu">
+                <button class="new-chat-btn" id="new-chat-btn"><i class="fa fa-plus" aria-hidden="true"></i> New
+                    Chat</button>
+                <div class="chat-list" id="chat-list"></div>
+                <button class="delete-chats-btn" id="delete-chats-btn"><i class="fa fa-trash" aria-hidden="true"></i>
+                    Delete All Chats</button>
+            </div>
+        </div>
+        <div href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa fa-times"
+                aria-hidden="true"></i>
+        </div>
+
+    </div>
+
+    <div class="typing-indicator" id="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="version">
+        <p>Version 3.1.0</p>
+    </div>
+
+    <!-- Load the chatbot script -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if name is in cookies
+            const name = getCookie("userName");
+
+            if (!userName) {
+                // Show the modal if no name found
+                document.getElementById("name-modal").style.display = "flex";
+            }
+
+            document.getElementById("get-started-btn").addEventListener("click", function () {
+                const userName = document.getElementById("name-input").value.trim();
+                if (userName) {
+                    setCookie("userName", userName, 365);
+                    document.getElementById("name-modal").style.display = "none";  // Hide the modal
+                }
+            });
+        });
+
+        // Cookie functions
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            const name = cname + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(userName) == 0) {
+                    return c.substring(userName.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function (error) {
+                    console.log('ServiceWorker registration failed: ', error);
+                });
+            });
+        }
+    </script>
+
+    <script>
+        self.addEventListener('install', function (event) {
+            event.waitUntil(
+                caches.open('my-cache').then(function (cache) {
+                    return cache.addAll([
+                        '/',
+                        '/index.html',
+                        '/styles.css',
+                        '/script.js'
+                    ]);
+                })
+            );
+        });
+
+        self.addEventListener('fetch', function (event) {
+            event.respondWith(
+                caches.match(event.request).then(function (response) {
+                    return response || fetch(event.request);
+                })
+            );
+        });
+    </script>
+
+
+    <script>
+        // New JavaScript code here...
+
+        let intervalId; // Variable to store the interval ID
+        let lastClickedChatButton = null; // Variable to store the last clicked chat button
+
+        function openNewChat() {
+            const chatList = document.getElementById("chat-list");
+            const chatNumber = chatList.children.length + 1;
+            createChatButton(chatNumber);
+            openChat(chatNumber);
+
+            const response = newChatResponses[Math.floor(Math.random() * newChatResponses.length)];
+            addChatBubble(response, false);
+            message = message.toLowerCase();
+        }
+
+
+        // Function to create a chat button
+        function createChatButton(chatNumber) {
+            const chatList = document.getElementById("chat-list");
+            const newChatButton = document.createElement("button");
+            const currentDate = new Date().toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+            });
+            newChatButton.textContent = `Chat ${chatNumber}`;
+            newChatButton.innerHTML += `<span class="chat-date">${currentDate}</span>`;
+            newChatButton.addEventListener("click", () => openChat(chatNumber));
+            newChatButton.addEventListener("touchstart", () => openChat(chatNumber));
+            newChatButton.style.borderRadius = "10px";
+            newChatButton.style.backgroundColor = "white";
+            newChatButton.style.color = "black";
+            newChatButton.style.border = "2px solid black";
+            newChatButton.style.padding = "5px";
+            newChatButton.style.marginBottom = "5px";
+            newChatButton.style.cursor = "pointer";
+            chatList.appendChild(newChatButton);
+            updatePillContent(); // Refresh the pills
+
+            // Create and add trash can icon to the right of the chat button
+            const trashIcon = document.createElement("i");
+            trashIcon.classList.add("fas", "fa-trash-alt", "trash-icon");
+            trashIcon.addEventListener("click", () => deleteChat(chatNumber));
+            newChatButton.appendChild(trashIcon);
+            updatePillContent(); // Refresh the pills
+        }
+
+        // Function to open an existing chat
+        function openChat(chatNumber) {
+            const chatBox = document.getElementById("chat-box");
+            const chatList = document.getElementById("chat-list");
+            const chatButtons = chatList.children;
+
+            // Clear the interval for updating chat history to prevent duplicates
+            clearInterval(intervalId);
+            updatePillContent(); // Refresh the pills
+
+            // Save the current chat content in the menu
+            const currentChatNumber = Array.from(chatButtons).indexOf(
+                document.querySelector(".active-chat")
+            );
+            if (currentChatNumber !== -1) {
+                localStorage.setItem(`chat_${currentChatNumber + 1}`, chatBox.innerHTML);
+                // Remove active class from the previously active chat button
+                chatButtons[currentChatNumber].classList.remove("active-chat");
+            }
+
+            // Load the selected chat content
+            const chatContent = localStorage.getItem(`chat_${chatNumber}`);
+            chatBox.innerHTML = chatContent || "";
+
+            // Add active class to the selected chat button
+            chatButtons[chatNumber - 1].classList.add("active-chat");
+            lastClickedChatButton = chatButtons[chatNumber - 1];
+
+            // Update chat history every second
+            intervalId = setInterval(function () {
+                localStorage.setItem(`chat_${chatNumber}`, chatBox.innerHTML);
+            }, 1000);
+
+            // Update the chat name above the chat box
+            const chatNameDisplay = document.getElementById("chat-name");
+            const chatDateDisplay = chatButtons[chatNumber - 1].querySelector(".chat-date");
+            const chatDate = chatDateDisplay.textContent;
+            chatNameDisplay.innerHTML = `Chat ${chatNumber}<br><span class="chat-date">${chatDate}</span>`;
+        }
+
+        // Function to delete an individual chat
+        function deleteChat(chatNumber) {
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML = ""; // Clear the chat box
+
+            // Remove the chat button and its corresponding chat data from localStorage
+            const chatList = document.getElementById("chat-list");
+            const chatButtonToDelete = chatList.children[chatNumber - 1];
+            chatList.removeChild(chatButtonToDelete);
+            localStorage.removeItem(`chat_${chatNumber}`);
+            updatePillContent(); // Refresh the pills
+
+            // Update the chat name above the chat box after deleting the chat
+            const chatNameDisplay = document.getElementById("chat-name");
+            const chatDateDisplay = chatButtonToDelete.querySelector(".chat-date");
+            const chatDate = chatDateDisplay.textContent;
+            chatNameDisplay.innerHTML = "";
+
+            // Reopen the first chat if it was the one deleted
+            if (chatNumber === 1) {
+                if (chatList.children.length > 0) {
+                    const newActiveChatNumber = 1;
+                    openChat(newActiveChatNumber);
+                }
+            }
+        }
+
+        // Function to delete all chats except the current one
+        function deleteChats() {
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML = ""; // Clear the chat box
+
+            // Remove all chat buttons except the "New Chat" button
+            const chatList = document.getElementById("chat-list");
+            const chatButtons = chatList.children;
+            while (chatButtons.length > 1) {
+                chatList.removeChild(chatButtons[0]);
+            }
+
+            // Clear localStorage for chats except the current one
+            const currentChatNumber = Array.from(chatButtons).indexOf(
+                document.querySelector(".active-chat")
+            );
+            const currentChatContent = chatBox.innerHTML.trim();
+            for (let i = 1; i <= localStorage.length; i++) {
+                const chatContent = localStorage.getItem(`chat_${i}`);
+                if (chatContent && chatContent !== currentChatContent && i !== currentChatNumber + 1) {
+                    localStorage.removeItem(`chat_${i}`);
+                }
+            }
+
+            // Update the chat name above the chat box after deleting chats
+            const chatNameDisplay = document.getElementById("chat-name");
+            const chatDateDisplay = chatButtons[currentChatNumber].querySelector(".chat-date");
+            const chatDate = chatDateDisplay.textContent;
+            chatNameDisplay.innerHTML = `Chat ${currentChatNumber + 1}<br><span class="chat-date">${chatDate}</span>`;
+        }
+
+        // Event listener for the "New Chat" button
+        const newChatBtn = document.getElementById("new-chat-btn");
+        newChatBtn.addEventListener("click", openNewChat);
+
+        // Event listener for the "Delete All Chats" button
+        const deleteChatsBtn = document.getElementById("delete-chats-btn");
+        deleteChatsBtn.addEventListener("click", deleteChats);
+
+        // Load chat history from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatList = document.getElementById("chat-list");
+            for (let i = 1; i <= localStorage.length; i++) {
+                const chatContent = localStorage.getItem(`chat_${i}`);
+                if (chatContent) {
+                    createChatButton(i);
+                }
+            }
+
+            // Check if there's an active chat stored in localStorage
+            const activeChat = localStorage.getItem("activeChat");
+            if (activeChat) {
+                const chatNumber = parseInt(activeChat, 10);
+                openChat(chatNumber);
+            }
+        });
+
+        // Save the current active chat to localStorage when the page is unloaded
+        window.addEventListener("beforeunload", function () {
+            const chatList = document.getElementById("chat-list");
+            const chatButtons = chatList.children;
+            let activeChatNumber = 0;
+            for (let i = 0; i < chatButtons.length; i++) {
+                if (chatButtons[i].classList.contains("active-chat")) {
+                    activeChatNumber = i + 1;
+                    break;
+                }
+            }
+            localStorage.setItem("activeChat", activeChatNumber.toString());
+            localStorage.setItem(`chat_${activeChatNumber}`, chatBox.innerHTML);
+        });
+
+        // Add a click event listener to the chat list to handle click outside of chat buttons
+        const chatList = document.getElementById("chat-list");
+        chatList.addEventListener("click", (event) => {
+            if (event.target.tagName === "DIV") {
+                // If a click occurs outside of any chat button, remove active-chat style from the last clicked chat button
+                if (lastClickedChatButton) {
+                    lastClickedChatButton.classList.remove("active-chat");
+                }
+            }
+        });
+    </script>
+    <script>
+        // Load chat history from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatHistory = localStorage.getItem("chatHistory");
+            if (chatHistory) {
+                const chatBox = document.getElementById("chat-box");
+                chatBox.innerHTML = chatHistory;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            // Update chat history every second
+            setInterval(function () {
+                const chatBox = document.getElementById("chat-box");
+                localStorage.setItem("chatHistory", chatBox.innerHTML);
+            }, 1000);
+        });
+    </script>
+    <script>
+        // Automatically click the button every three seconds
+        setInterval(function () {
+            const jumpBottomBtn = document.getElementById("jump-bottom-btn");
+            jumpBottomBtn.click();
+        }, 3000);
+    </script>
+    <script>
+        let autoClickInterval;
+
+        // Function to handle the automatic button click
+        function performAutoClick() {
+            const jumpBottomBtn = document.getElementById("jump-bottom-btn");
+            jumpBottomBtn.click();
+        }
+
+        // Function to start the auto clicking
+        function startAutoClick() {
+            autoClickInterval = setInterval(performAutoClick, 3000);
+        }
+
+        // Function to stop the auto clicking
+        function stopAutoClick() {
+            clearInterval(autoClickInterval);
+        }
+
+        // Event listener for scroll events
+        window.addEventListener("scroll", function () {
+            // Stop auto clicking
+            stopAutoClick();
+
+            // Check if scrolling has stopped
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = setTimeout(function () {
+                // Resume auto clicking after 5 seconds of no scrolling
+                startAutoClick();
+            }, 5000);
+        });
+
+        // Start the auto clicking initially
+        startAutoClick();
+    </script>
+
+    <script src="./assets/js/chatbot.js"></script>
+    <script>
+        // Function to open the mail app and compose an email
+        function openMail() {
+            // Replace "mailto:" with the appropriate mailto URL for your mail app
+            window.location.href = "mailto:";
+        }
+
+        // Function to handle user input
+        function handleUserInput(message) {
+            if (message.toLowerCase() === "openup mail") {
+                openMail();
+            } else {
+                // Handle other user input
+                // ...
+            }
+        }
+
+        // Event listener for form submission
+        const form = document.querySelector(".input-form");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const inputBox = document.getElementById("input-box");
+            const message = inputBox.value;
+            handleUserInput(message);
+            inputBox.value = ""; // Clear the input box
+        });
+    </script>
+    <script>
+        const clearChatBtn = document.getElementById("clear-chat-btn");
+        clearChatBtn.addEventListener("click", clearChat);
+
+        function clearChat() {
+            chatBox.innerHTML = "";
+            const response = clearResponses[Math.floor(Math.random() * clearResponses.length)];
+            addChatBubble(response, false);
+            message = message.toLowerCase();
+        }
+    </script>
+    <script>
+        // Append the bot's response to the chat history
+        const botResponse = getBotResponse();  // Replace with your bot's response
+        chatHistory.push(botResponse);
+    </script>
+    <script>
+        // Update the chat display
+        // Your existing code here...
+
+        // Scroll to the bottom of the chat container
+        function scrollBottom() {
+            const chatContainer = document.getElementById('chat-container');  // Replace with your chat container element ID
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+    <script>
+        const usedPhrases = []; // Array to store used phrases
+
+        function getRandomText() {
+            var suggestions = [
+                "What can you do",
+                "What are your capabilities",
+                "Why",
+                "How are you",
+                "Tell me a knock knock joke",
+                "Haha",
+                "What's the date",
+                "What day is it",
+                "When's your birthday",
+                "Tell me a dad joke",
+                "Thank You",
+                "oh ok",
+                "tell me a story",
+                "What time is it",
+                "What is your name",
+                "show me a list of commands",
+                "Why can't you understand punctuation",
+                "cool",
+                "ok",
+                "You're cool",
+                "awesome",
+                "hello",
+                "goodbye",
+                "Tell me your funny joke",
+                "Tell me a joke",
+                "2+2",
+                "lol",
+                "2*2",
+                "Sorry",
+                "Make me laugh",
+                "why can't you understand emojis",
+                "What movie do you suggest",
+                "What can you talk about",
+                "6/6",
+                "Clear the chat",
+                "Dark mode",
+                "Light mode",
+                "7-5"
+            ];
+
+            // Remove used phrases from the suggestions array
+            const availableSuggestions = suggestions.filter(suggestion => !usedPhrases.includes(suggestion));
+
+            if (availableSuggestions.length === 0) {
+                usedPhrases.length = 0; // Reset the used phrases array
+                return getRandomText(); // Get a random suggestion again
+            }
+
+            const randomIndex = Math.floor(Math.random() * availableSuggestions.length);
+            const randomSuggestion = availableSuggestions[randomIndex];
+            usedPhrases.push(randomSuggestion); // Mark the suggestion as used
+            return randomSuggestion;
+        }
+
+        // ...
+
+
+        // Modify the updatePillContent function
+        function updatePillContent() {
+            var pill1 = document.getElementById("pill1");
+            var pill2 = document.getElementById("pill2");
+            var pill3 = document.getElementById("pill3");
+            var pill4 = document.getElementById("pill4");
+
+            pill1.textContent = getRandomText();
+            pill2.textContent = getRandomText();
+
+            // Check if the user has sent a message containing "hello"
+            if (document.getElementById("input-box").value.toLowerCase().includes("hello")) {
+                pill3.textContent = "How are you";
+            } else {
+                pill3.textContent = getRandomText();
+            }
+
+            var now = new Date();
+            var currentHour = now.getHours();
+            var currentMinute = now.getMinutes();
+
+            if (currentHour >= 4 && currentHour <= 11 && currentMinute <= 59) {
+                pill4.textContent = "Good Morning";
+            } else if (currentHour >= 11 && currentHour <= 17 && currentMinute <= 59) {
+                pill4.textContent = "Good Afternoon";
+            } else {
+                pill4.textContent = "Good Night";
+            }
+
+            // Add click handlers
+            var canClick = true;
+
+            pill1.onclick = function () {
+                if (canClick) {
+                    document.getElementById("input-box").value = pill1.textContent;
+                    document.getElementById("submit-btn").click();
+                    canClick = false;
+                    setTimeout(function () {
+                        canClick = true;
+                    }, 1000);
+                    updatePillContent(); // Refresh the pills
+                }
+            };
+
+            pill2.onclick = function () {
+                if (canClick) {
+                    document.getElementById("input-box").value = pill2.textContent;
+                    document.getElementById("submit-btn").click();
+                    canClick = false;
+                    setTimeout(function () {
+                        canClick = true;
+                    }, 1000);
+                    updatePillContent(); // Refresh the pills
+                }
+            };
+
+            pill3.onclick = function () {
+                if (canClick) {
+                    document.getElementById("input-box").value = pill3.textContent;
+                    document.getElementById("submit-btn").click();
+                    canClick = false;
+                    setTimeout(function () {
+                        canClick = true;
+                    }, 1000);
+                    updatePillContent(); // Refresh the pills
+                }
+            };
+
+            pill4.onclick = function () {
+                if (canClick) {
+                    document.getElementById("input-box").value = pill4.textContent;
+                    document.getElementById("submit-btn").click();
+                    canClick = false;
+                    setTimeout(function () {
+                        canClick = true;
+                    }, 1000);
+                    updatePillContent(); // Refresh the pills
+                }
+            };
+        }
+
+        // ...
+
+        // ...
+
+        // Initial update
+        updatePillContent();
+
+        // Update content every minute
+        setInterval(updatePillContent, 60000);
+    </script>
+    <script>
+        function refreshPills() {
+            updatePillContent();
+        }
+    </script>
+    <script>
+        const clearButton = document.getElementById("clear-btn");
+        clearButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            chatBox.innerHTML = "";
+            localStorage.removeItem("chatHistory");
+        });
+    </script>
+    <script>
+        const jumpBottomBtn = document.getElementById("jump-bottom-btn");
+        jumpBottomBtn.addEventListener("click", function () {
+            chatBox.scrollTo({
+                top: chatBox.scrollHeight,
+                behavior: "smooth"
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("keydown", function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.altKey && event.key === "c") {
+                clearChat();
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("keydown", function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.altKey && event.key === "r") {
+                refreshPills();
+            }
+        });
+    </script>
+    <script>
+
+        // Function to get the weather for a specific location
+        function getWeather(location) {
+            const apiKey = 'dfc60b93f4c3a06e9c4037d91161a1e3';
+            const url = `http://api.openweathermap.org/data/2.5/weather?q=${location},usa&APPID=dfc60b93f4c3a06e9c4037d91161a1e3`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === "404") {
+                        addChatBubble(`Sorry, I couldn't find the weather for ${location}. If you put your state in, make sure to put a comma between your city and state, e.g Milwaukee, WI.`, false);
+                    } else {
+                        const condition = data.weather[0].description;
+                        const temperature = Math.round((data.main.temp - 273.15) * 9 / 5 + 32); // Convert temperature to Fahrenheit
+                        const windSpeed = data.wind.speed;
+                        addChatBubble(`Weather for ${location}: Condition: ${condition}, Temperature: ${temperature}°F, and the Wind Speed is: ${windSpeed} m/s`, false);
+                    }
+                })
+                .catch(error => {
+                    addChatBubble(`Sorry, an error occurred while retrieving the weather for ${location}.`, false);
+                });
+        }
+    </script>
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").classList.add("open");
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").classList.remove("open");
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the name is stored in cookies
+            const userName = getCookie("userName");
+
+            if (!userName) {
+                // Show the name modal if no name is found
+                document.getElementById("name-modal").style.display = "flex";
+            } else {
+                // If the name is found, greet the user
+                greetUser(userName);
+            }
+
+            // Event listener for "Get Started!" button
+            document.getElementById("get-started-btn").addEventListener("click", function () {
+                const userName = document.getElementById("name-input").value.trim();
+                if (userName) {
+                    setCookie("userName", userName, 365);
+                    document.getElementById("name-modal").style.display = "none";  // Hide the modal
+                    greetUser(userName);  // Greet the user once they input their name
+                }
+            });
+        });
+
+        // Function to greet the user using the stored or input name
+        function greetUser(userName) {
+            addChatBubble(`Hey there, ${userName}! What's on your mind? Anything I can help with?`, false);  // Greet the user by name
+        }
+
+        // Cookie functions to store and retrieve the user's name
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            const name = cname + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the name is stored in cookies
+            const userName = getCookie("userName");
+
+            if (!userName) {
+                // Show the name modal if no name is found
+                document.getElementById("name-modal").style.display = "flex";
+            } else {
+                // If the name is found, greet the user
+                greetUser(userName);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
